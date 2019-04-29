@@ -1,0 +1,43 @@
+package cn.tortoise.utils;
+
+import cn.tortoise.exceptions.IllegalArgumentCheckedException;
+
+public class CourseUtil {
+    private static final int DAY_NUM = 7;
+    private static final int WEEK_NUM = 20;
+    private static final int CLASS_TIME_NUM = 12;
+    private static final int ALLOW_GRADE_NUM = 4;
+
+    public static String decodeDays(int days){
+        return decode(days, DAY_NUM);
+    }
+
+    public static String decodeWeeks(int weeks){
+        return decode(weeks, WEEK_NUM);
+    }
+
+    public static String decodeClassTime(int classTime){
+        return decode(classTime, CLASS_TIME_NUM);
+    }
+
+    public static String decodeAllowGrade(int allowGrade){
+        return decode(allowGrade, ALLOW_GRADE_NUM);
+    }
+
+    private static String decode(int days, int dayNum) {
+        int mark = 1;
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        for(int i = 0; i < dayNum; ++i){
+            if((mark & (days >>> i)) == mark){
+                if(!first){
+                    sb.append(',');
+                }else{
+                    first = false;
+                }
+                sb.append(i + 1);
+            }
+        }
+        return sb.length() == 0 ? "none" : sb.toString();
+    }
+}

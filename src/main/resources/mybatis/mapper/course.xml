@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tortoise.dao.CourseDao">
+    <insert id="addNewCourse" parameterType="cn.tortoise.entity.Course">
+        insert into course(
+        name, teacher_id, credit_point, credit_hours,
+        max_number, current_number, start_time, end_time,
+        days, weeks, class_time, allow_grade, detail)
+        values(
+        #{name}, #{teacherId}, #{creditPoint},
+        #{creditHours}, #{maxNumber},
+        #{currentNumber}, #{startTime},
+        #{endTime}, #{days},
+        #{weeks}, #{classTime},
+        #{allowGrade}, #{detail})
+
+    </insert>
+
+    <delete id="deleteCourseById" parameterType="long">
+        delete from course where id=#{id}
+    </delete>
+
+    <select id="getCourseById" parameterType="long" resultType="cn.tortoise.entity.Course">
+        select id, name, teacher_id, credit_point,
+                credit_hours, max_number, current_number,
+                start_time, end_time, days, weeks, class_time,
+                allow_grade, detail from course where id=#{id};
+    </select>
+
+    <select id="getCourseList" resultType="cn.tortoise.entity.Course">
+        select id, name, teacher_id, credit_point,
+                credit_hours, max_number, current_number,
+                start_time, end_time, days, weeks, class_time,
+                allow_grade, detail
+        from course
+    </select>
+
+    <select id="getCourseListUsingOffsetAndLimit" resultType="cn.tortoise.entity.Course">
+        select id, name, teacher_id, credit_point,
+                credit_hours, max_number, current_number,
+                start_time, end_time, days, weeks, class_time,
+                allow_grade, detail
+        from course
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="getCourseNum" resultType="int">
+        select count(id) from course
+    </select>
+
+    <select id="getSelectedCourseOverviewById" resultType="cn.tortoise.dto.SelectedCourseOverview">
+        select selected_course.course_id as course_id,
+                course.name as course_name,
+                selected_course.score as score
+        from selected_course, course
+        where selected_course.student_id = #{id}
+            and selected_course.course_id = course.id
+    </select>
+
+    <select id="getSelectedCourseOverviewByIdUsingOffsetAndLimit" resultType="cn.tortoise.dto.SelectedCourseOverview">
+      select selected_course.course_id as course_id,
+                course.name as course_name,
+                selected_course.score as score
+        from selected_course, course
+        where selected_course.student_id = #{id}
+            and selected_course.course_id = course.id
+        limit #{offset}, #{limit}
+    </select>
+
+
+
+
+</mapper>
