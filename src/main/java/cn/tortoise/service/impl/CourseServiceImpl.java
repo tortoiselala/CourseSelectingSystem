@@ -47,7 +47,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getCourseList(int offset, int limit) throws IllegalArgumentCheckedException {
-        if(offset < 0 || limit < offset){
+        if(offset < 0 || limit < 0){
             throw new IllegalArgumentCheckedException();
         }
         return courseDao.getCourseListUsingOffsetAndLimit(offset, limit);

@@ -10,6 +10,11 @@ public class User {
     public User() {
     }
 
+    public User(String username, boolean student) {
+        this.username = username;
+        this.student = student;
+    }
+
     public User(String username, String password, boolean student) {
         this.username = username;
         this.password = password;

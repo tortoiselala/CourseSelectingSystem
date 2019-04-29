@@ -1,4 +1,4 @@
-package com.tortoise.enums;
+package cn.tortoise.enums;
 
 public enum StatusEnum {
     SUCCESS(1, ""),

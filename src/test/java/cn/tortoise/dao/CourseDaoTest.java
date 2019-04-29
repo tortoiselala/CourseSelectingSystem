@@ -25,8 +25,8 @@ public class CourseDaoTest {
     @Test
     public void addNewCourse() {
         Course course = new Course();
-        course.setName("课程100");
-        course.setTeacherId("M000000005");
+        course.setName("课程101");
+        course.setTeacherId("M000000006");
         course.setCreditPoint(2.5f);
         course.setCreditHours(24);
         course.setMaxNumber(100);
@@ -43,7 +43,7 @@ public class CourseDaoTest {
 
     @Test
     public void deleteCourseById() {
-        System.out.println(courseDao.deleteCourseById(1002));
+        System.out.println(courseDao.deleteCourseById(1001));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class CourseDaoTest {
 
     @Test
     public void getCourseListUsingOffsetAndLimit() {
-        for (Course course : courseDao.getCourseListUsingOffsetAndLimit(0, 100)){
+        for (Course course : courseDao.getCourseListUsingOffsetAndLimit(3, 2)){
             System.out.println(course);
         }
     }

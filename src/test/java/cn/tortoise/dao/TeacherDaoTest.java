@@ -16,14 +16,14 @@ import static org.junit.Assert.*;
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
 public class TeacherDaoTest {
 
-    private final String id = "M201614515";
+    private final String id = "M000000001";
 
     @Autowired
     TeacherDao teacherDao;
 
     @Test
     public void getPassword() {
-        Assert.assertTrue(teacherDao.getPasswordById(id).equals("2222222222"));
+        Assert.assertTrue(teacherDao.getPasswordById(id).equals("11111111"));
     }
 
     @Test

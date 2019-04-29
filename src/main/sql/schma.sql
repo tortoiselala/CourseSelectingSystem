@@ -13,6 +13,7 @@ create table student
     major_id  char(5)  not null comment '专业',
     school_id char(5)  not null comment '学院',
     sex       char     not null comment '性别',
+    login_date timestamp not null comment '登录日期',
 
     primary key (id),
     index (id)
@@ -28,7 +29,7 @@ create table teacher
     school_id char(10) not null comment '学院',
     password  char(20) not null comment '密码',
     sex       char(1)  not null comment '性别',
-
+    login_date timestamp not null comment '登录日期',
     primary key (id),
     index (id)
 ) comment '教师信息表' engine = innodb

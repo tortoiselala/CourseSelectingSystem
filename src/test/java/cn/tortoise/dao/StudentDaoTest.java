@@ -16,7 +16,7 @@ import java.util.Date;
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
 
 public class StudentDaoTest {
-    private static final String id = "U201614515";
+    private static final String id = "U000000001";
     @Autowired
     StudentDao studentDao;
 
@@ -40,13 +40,5 @@ public class StudentDaoTest {
         String studentId = "U201614515";
         long courseId = 1001L;
         System.out.println(studentDao.selectCourse(studentId, courseId));
-    }
-
-    @Test
-    public void getAllSelectedCourseById() {
-        String studentId = "U201614515";
-        for(SelectedCourse selectedCourse :studentDao.getAllSelectedCourseById(studentId)){
-            System.out.println(selectedCourse);
-        }
     }
 }
