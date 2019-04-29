@@ -20,13 +20,4 @@
         update ignore teacher set login_date = #{date}
         where id = #{id}
     </update>
-
-    <select id="getAllCourseById" resultType="cn.tortoise.entity.Course">
-        select id, name, teacher_id, credit_point,
-                credit_hours, max_number, current_number,
-                start_time, end_time, days, weeks, class_time,
-                allow_grade, detail
-        from course
-        where teacher_id = #{teacherId}
-    </select>
 </mapper>

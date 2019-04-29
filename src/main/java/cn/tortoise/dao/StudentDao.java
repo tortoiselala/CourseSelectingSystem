@@ -15,6 +15,4 @@ public interface StudentDao {
     Student getStudentById(String id);
     // select course
     int selectCourse(@Param("studentId")String studentId, @Param("courseId")long courseId);
-    // get all selected course
-    List<SelectedCourse> getAllSelectedCourseById(String id);
 }

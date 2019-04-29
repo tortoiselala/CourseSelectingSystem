@@ -5,18 +5,19 @@ import cn.tortoise.dto.CourseOverview;
 import cn.tortoise.dto.SelectedCourseOverview;
 import cn.tortoise.entity.Course;
 import cn.tortoise.entity.SelectedCourse;
+import cn.tortoise.exceptions.IllegalArgumentCheckedException;
 
 import java.util.List;
 
 public interface CourseService {
 
-    List<SelectedCourseOverview> getSelectedCourseById(String id);
+    List<SelectedCourseOverview> getSelectedCourseByStudentId(String id) throws IllegalArgumentCheckedException;
 
-    List<SelectedCourseOverview> getSelectedCourseById(String id, int offset, int limit);
+    List<SelectedCourseOverview> getSelectedCourseByStudentId(String id, int offset, int limit) throws IllegalArgumentCheckedException;
 
-    List<Course> getCourse();
+    List<Course> getCourseList() throws IllegalArgumentCheckedException;
 
-    List<Course> getCourse(int offset, int limit);
+    List<Course> getCourseList(int offset, int limit) throws IllegalArgumentCheckedException;
 
     CourseOverview transformToCourseOverview(Course original);
 

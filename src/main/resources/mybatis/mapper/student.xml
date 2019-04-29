@@ -23,10 +23,4 @@
         insert ignore into selected_course (student_id, course_id)
         values (#{studentId}, #{courseId})
     </insert>
-
-    <select id="getAllSelectedCourseById" resultType="cn.tortoise.entity.SelectedCourse">
-        select student_id, course_id, score
-        from selected_course
-        where student_id = #{courseId}
-    </select>
 </mapper>

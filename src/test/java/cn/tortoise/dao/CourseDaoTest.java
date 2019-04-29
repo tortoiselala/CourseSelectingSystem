@@ -25,19 +25,19 @@ public class CourseDaoTest {
     @Test
     public void addNewCourse() {
         Course course = new Course();
-        course.setName("计算机操作系统");
-        course.setTeacherId("M201614515");
+        course.setName("课程100");
+        course.setTeacherId("M000000005");
         course.setCreditPoint(2.5f);
         course.setCreditHours(24);
         course.setMaxNumber(100);
         course.setCurrentNumber(0);
-        course.setStartTime(DateHelper.parseDate("2018-01-01 11:11:11"));
+        course.setStartTime(DateHelper.parseDate("2017-01-01 11:11:11"));
         course.setEndTime(DateHelper.parseDate("2019-01-01 11:11:11"));
         course.setDays(3);
         course.setWeeks(1025);
         course.setClassTime(6);
         course.setAllowGrade(1);
-        course.setDetail("计算机操作系统");
+        course.setDetail("课程100");
         System.out.println(courseDao.addNewCourse(course));
     }
 

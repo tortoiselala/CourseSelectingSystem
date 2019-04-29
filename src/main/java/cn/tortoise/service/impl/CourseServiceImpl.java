@@ -6,7 +6,7 @@ import cn.tortoise.dto.CourseDetail;
 import cn.tortoise.dto.CourseOverview;
 import cn.tortoise.dto.SelectedCourseOverview;
 import cn.tortoise.entity.Course;
-import cn.tortoise.entity.SelectedCourse;
+import cn.tortoise.exceptions.IllegalArgumentCheckedException;
 import cn.tortoise.service.CourseService;
 import cn.tortoise.utils.CourseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,23 +25,32 @@ public class CourseServiceImpl implements CourseService {
     TeacherDao teacherDao;
 
     @Override
-    public List<SelectedCourseOverview> getSelectedCourseById(String id) {
-        return null;
+    public List<SelectedCourseOverview> getSelectedCourseByStudentId(String id) throws IllegalArgumentCheckedException {
+        if(id == null || id.length() == 0){
+            throw new IllegalArgumentCheckedException("Illegal argument : " + id);
+        }
+        return courseDao.getSelectedCourseOverviewById(id);
     }
 
     @Override
-    public List<SelectedCourseOverview> getSelectedCourseById(String id, int offset, int limit) {
-        return null;
+    public List<SelectedCourseOverview> getSelectedCourseByStudentId(String id, int offset, int limit) throws IllegalArgumentCheckedException {
+        if(id == null || id.length() == 0){
+            throw new IllegalArgumentCheckedException("Illegal argument : " + id);
+        }
+        return courseDao.getSelectedCourseOverviewByIdUsingOffsetAndLimit(id, offset, limit);
     }
 
     @Override
-    public List<Course> getCourse() {
-        return getCourse(0, courseDao.getCourseNum());
+    public List<Course> getCourseList() throws IllegalArgumentCheckedException {
+        return courseDao.getCourseList();
     }
 
     @Override
-    public List<Course> getCourse(int offset, int limit) {
-        return getCourse(offset, limit);
+    public List<Course> getCourseList(int offset, int limit) throws IllegalArgumentCheckedException {
+        if(offset < 0 || limit < offset){
+            throw new IllegalArgumentCheckedException();
+        }
+        return courseDao.getCourseListUsingOffsetAndLimit(offset, limit);
     }
 
     @Override

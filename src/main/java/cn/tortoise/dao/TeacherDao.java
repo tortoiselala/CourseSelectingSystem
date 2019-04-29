@@ -19,7 +19,4 @@ public interface TeacherDao {
 
     // update login date
     int updateLoginDateById(@Param("id")String id, @Param("date")Date date);
-
-    // get course by id
-    List<Course> getAllCourseById(String teacherId);
 }
