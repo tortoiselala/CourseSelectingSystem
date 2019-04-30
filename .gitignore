@@ -28,3 +28,7 @@ CourseSelectingSystem.iml
 
 # target folder
 target/
+
+
+# database config file 
+*.properties
