@@ -25,6 +25,11 @@ public class CourseServiceImpl implements CourseService {
     TeacherDao teacherDao;
 
     @Override
+    public Course getCourseById(long id) {
+        return this.courseDao.getCourseById(id);
+    }
+
+    @Override
     public List<SelectedCourseOverview> getSelectedCourseByStudentId(String id) throws IllegalArgumentCheckedException {
         if(id == null || id.length() == 0){
             throw new IllegalArgumentCheckedException("Illegal argument : " + id);
@@ -41,7 +46,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getCourseList() throws IllegalArgumentCheckedException {
+    public List<Course> getCourseList() {
         return courseDao.getCourseList();
     }
 

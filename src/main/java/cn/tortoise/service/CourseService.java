@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface CourseService {
 
+    Course getCourseById(long id);
+
     List<SelectedCourseOverview> getSelectedCourseByStudentId(String id) throws IllegalArgumentCheckedException;
 
     List<SelectedCourseOverview> getSelectedCourseByStudentId(String id, int offset, int limit) throws IllegalArgumentCheckedException;

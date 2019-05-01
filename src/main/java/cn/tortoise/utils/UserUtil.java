@@ -5,7 +5,7 @@ import cn.tortoise.exceptions.IllegalArgumentCheckedException;
 
 public class UserUtil {
     public static void userParmCheck(User user) throws IllegalArgumentCheckedException {
-        if(user  == null || !user.isStudent()
+        if(user  == null
                 || user.getUsername() == null
                 || user.getPassword() == null
                 || user.getUsername().length() == 0

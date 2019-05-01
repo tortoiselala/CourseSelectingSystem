@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+
+
 public interface CourseDao {
     //
     int addNewCourse(Course course);

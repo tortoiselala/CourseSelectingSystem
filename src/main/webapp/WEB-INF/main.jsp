@@ -1,9 +1,9 @@
 <%@page contentType="text/html; charset=UTF-8" language="java" %>
-<%@include file="../common/tag.jsp"%>
+<%@include file="common/tag.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>课程列表</title>
+    <title>秒杀商品列表</title>
 </head>
 <body>
 <div class="container">
@@ -15,21 +15,16 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>课程</th>
-                    <th>开课教师</th>
-                    <th>学分</th>
-                    <th>学时</th>
-                    <th>人数</th>
-                    <th>开课时间</th>
+                    <th>名称</th>
+                    <th>库存</th>
+                    <th>开始时间</th>
                     <th>结束时间</th>
-                    <th>星期</th>
-                    <th>周</th>
-                    <th>上课时间</th>
-                    <th>允许</th>
+                    <th>创建时间</th>
+                    <th>详情页</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${COURSE_LIST}" var="col">
+                <c:forEach items="${COURST_LIST}" var="col">
                     <tr>
                         <td>${col.name}</td>
                         <td>${col.teacherName}</td>
@@ -46,8 +41,8 @@
                         <td>${col.weeks}</td>
                         <td>${col.classTime}</td>
                         <td>${col.allowGrade}</td>
-                        <td><a class="btn btn-info" href="/student/course/${col.id}/detail" target="_blank">详情</a></td>
-                        <td><a class="btn btn-info" href="/student/course/${col.id}/select" target="_blank">选择</a></td>
+                        <td><a class="btn btn-info" href="/seckill/detail" target="_blank">详情</a></td>
+                        <td><a class="btn btn-info" href="/seckill/detail" target="_blank">选择</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

@@ -19,6 +19,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public boolean authCheck(User user) throws IllegalArgumentCheckedException {
         UserUtil.userParmCheck(user);
-        return teacherDao.getPasswordById(user.getPassword()).equals(PasswordHandler.encryption(user.getPassword()));
+        return teacherDao.getPasswordById(user.getUsername()).equals(PasswordHandler.encryption(user.getPassword()));
     }
 }

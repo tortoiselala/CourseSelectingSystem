@@ -93,11 +93,14 @@ function onSubmitButtonClick(){
                 type: 'POST',
                 data: {
                     'username': $('#username').val(),
-                    'password': $('#password').val()
+                    'password': $('#password').val(),
+                    'student': 'true',
                 },
                 success: function (result) {
-                    if(!result.success){
-                        window.location.assign("newPage.html")
+                    window.alert(result);
+                    console.log(result);
+                    if(result.success){
+                         window.location.assign("/student/main")
                     }
                     console.log(result.success);
                     console.log(result.message);

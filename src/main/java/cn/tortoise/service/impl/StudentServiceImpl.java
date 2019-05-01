@@ -18,6 +18,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public boolean authCheck(User user) throws IllegalArgumentCheckedException {
         UserUtil.userParmCheck(user);
-        return studentDao.getPasswordById(user.getPassword()).equals(PasswordHandler.encryption(user.getPassword()));
+        return studentDao.getPasswordById(user.getUsername()).equals(PasswordHandler.encryption(user.getPassword()));
     }
 }
