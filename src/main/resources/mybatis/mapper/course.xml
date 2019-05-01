@@ -68,6 +68,9 @@
         limit #{offset}, #{limit}
     </select>
 
+    <update id="decreaseCourse">
+        update ignore course set current_number = current_number + 1 where id = #{id}
+    </update>
 
 
 

@@ -1,18 +1,23 @@
 package cn.tortoise.service.impl;
 
+import cn.tortoise.constant.CommonConstant;
 import cn.tortoise.dao.CourseDao;
+import cn.tortoise.dao.ScheduleDao;
+import cn.tortoise.dao.StudentDao;
 import cn.tortoise.dao.TeacherDao;
-import cn.tortoise.dto.CourseDetail;
-import cn.tortoise.dto.CourseOverview;
-import cn.tortoise.dto.SelectedCourseOverview;
+import cn.tortoise.dto.*;
 import cn.tortoise.entity.Course;
+import cn.tortoise.entity.Schedule;
+import cn.tortoise.exceptions.ExecuteException;
 import cn.tortoise.exceptions.IllegalArgumentCheckedException;
 import cn.tortoise.service.CourseService;
 import cn.tortoise.utils.CourseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,6 +28,44 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     TeacherDao teacherDao;
+
+    @Autowired
+    ScheduleDao scheduleDao;
+
+    @Autowired
+    StudentDao studentDao;
+
+    @Override
+    @Transactional
+    public ExecuteResult executeSelection(String studentId, long courseId, String md5) throws ExecuteException {
+        if(!CourseUtil.md5Check(courseId, md5)){
+            throw new ExecuteException("request link had been rewrote");
+        }
+        Date now = new Date();
+        Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
+        if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
+            throw new ExecuteException("system is not open");
+        }
+        int insertCount = studentDao.selectCourse(studentId, courseId);
+        if(insertCount <= 0){
+            throw new ExecuteException("user had selected this course");
+        }
+        int updateCount = courseDao.decreaseCourse(courseId);
+        if(updateCount <= 0){
+            throw new ExecuteException("The number of students is full");
+        }
+        return new ExecuteResult(true, "");
+    }
+
+    @Override
+    public ExecuteResult exportExecuteUrl(long courseId){
+        Date now = new Date();
+        Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
+        if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
+           return new ExecuteResult(false, "");
+        }
+        return new ExecuteResult(true, CourseUtil.getMd5(courseId));
+    }
 
     @Override
     public Course getCourseById(long id) {

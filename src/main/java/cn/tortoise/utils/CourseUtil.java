@@ -1,6 +1,8 @@
 package cn.tortoise.utils;
 
+import cn.tortoise.constant.CommonConstant;
 import cn.tortoise.exceptions.IllegalArgumentCheckedException;
+import org.springframework.util.DigestUtils;
 
 public class CourseUtil {
     private static final int DAY_NUM = 7;
@@ -39,5 +41,13 @@ public class CourseUtil {
             }
         }
         return sb.length() == 0 ? "none" : sb.toString();
+    }
+
+    public static String getMd5(long courseId){
+        return DigestUtils.md5DigestAsHex((courseId + "/" + CommonConstant.MD5_SALT).getBytes());
+    }
+
+    public static boolean md5Check(long courseId, String expected){
+       return expected != null && getMd5(courseId).equals(expected);
     }
 }

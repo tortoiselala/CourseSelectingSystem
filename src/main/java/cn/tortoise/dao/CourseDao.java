@@ -33,4 +33,5 @@ public interface CourseDao {
     //
     List<SelectedCourseOverview> getSelectedCourseOverviewByIdUsingOffsetAndLimit(@Param("id")String id, @Param("offset")int offset, @Param("limit")int limit);
 
+    int decreaseCourse(long courseId);
 }

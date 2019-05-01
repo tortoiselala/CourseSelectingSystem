@@ -56,6 +56,7 @@ create table course
 
     primary key (id, teacher_id, start_time, end_time),
     foreign key (teacher_id) references teacher (id)
+    check(current_number <= maxNumber)
 ) comment '课程信息表' engine = innodb
                   default charset = utf8
                   auto_increment = 1000;

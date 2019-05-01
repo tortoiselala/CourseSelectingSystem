@@ -97,13 +97,9 @@ function onSubmitButtonClick(){
                     'student': 'true',
                 },
                 success: function (result) {
-                    window.alert(result);
-                    console.log(result);
                     if(result.success){
                          window.location.assign("/student/main")
                     }
-                    console.log(result.success);
-                    console.log(result.message);
                 },
                 dataType: 'json'
             }
