@@ -29,4 +29,9 @@ public class DateUtil {
         }
         return new Date();
     }
+
+
+    public static String toString(Date date){
+        return new SimpleDateFormat(FORMAT).format(date);
+    }
 }

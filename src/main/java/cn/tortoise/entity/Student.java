@@ -13,6 +13,9 @@ public class Student {
     private String schoolId;
     private Date loginDate;
 
+    public Student() {
+    }
+
     public Student(String id) {
         this.id = id;
     }
