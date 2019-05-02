@@ -95,8 +95,7 @@ public class StudentController {
             return new ExecuteResult(false, "please login first");
         }
         try {
-            ExecuteResult result = courseService.executeSelection(user.getUsername(), courseId, md5);
-            return result;
+            return courseService.executeSelection(user.getUsername(), courseId, md5);
         } catch (ExecuteException e) {
             return new ExecuteResult(false, e.getMessage());
         }

@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * 用于生成用户的信息
  */
-public class UserAutoGenerate {
+public class UserAutoGenerator {
     private static final int NUM = 10000;
 
     private static final String[] YEAR = {
@@ -20,11 +20,11 @@ public class UserAutoGenerate {
     };
     private Random rand;
 
-    public UserAutoGenerate() {
+    private UserAutoGenerator() {
         rand = new Random(new Date().getTime());
     }
 
-    public List<Student> generateStudents() {
+    private List<Student> generateStudents() {
         List<Student> list = new LinkedList<>();
         for(int i = 0; i < NUM; ++i){
             list.add(generateStudent());
@@ -32,7 +32,7 @@ public class UserAutoGenerate {
         return list;
     }
 
-    public Student generateStudent() {
+    private Student generateStudent() {
         Student stu = new Student();
         stu.setId(stringAutoGenerator());
         stu.setName(stu.getId());
@@ -89,7 +89,7 @@ public class UserAutoGenerate {
         }
 
     }
-    public static void toFile(List<Student> list, String detailFileName, String studentEntryFileName){
+    private static void toFile(List<Student> list, String detailFileName, String studentEntryFileName){
         try {
             FileWriter detailWriter = new FileWriter(detailFileName);
             FileWriter studentEntryWriter = new FileWriter(studentEntryFileName);
@@ -127,11 +127,11 @@ public class UserAutoGenerate {
     }
 
     public static void main(String[] args) {
-        toFile(new UserAutoGenerate().generateStudents(), "studentDetail1.txt", "studentEntry1.txt");
-        toFile(new UserAutoGenerate().generateStudents(), "studentDetail2.txt", "studentEntry2.txt");
-        toFile(new UserAutoGenerate().generateStudents(), "studentDetail3.txt", "studentEntry3.txt");
-        toFile(new UserAutoGenerate().generateStudents(), "studentDetail4.txt", "studentEntry4.txt");
-        toFile(new UserAutoGenerate().generateStudents(), "studentDetail5.txt", "studentEntry5.txt");
+        toFile(new UserAutoGenerator().generateStudents(), "studentDetail1.txt", "studentEntry1.txt");
+        toFile(new UserAutoGenerator().generateStudents(), "studentDetail2.txt", "studentEntry2.txt");
+        toFile(new UserAutoGenerator().generateStudents(), "studentDetail3.txt", "studentEntry3.txt");
+        toFile(new UserAutoGenerator().generateStudents(), "studentDetail4.txt", "studentEntry4.txt");
+        toFile(new UserAutoGenerator().generateStudents(), "studentDetail5.txt", "studentEntry5.txt");
     }
 
 }
