@@ -7,8 +7,7 @@ public class Schedule {
     private Date startTime;
     private Date endTime;
 
-    public Schedule(long id, Date startTime, Date endTime) {
-        this.id = id;
+    public Schedule(Date startTime, Date endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -35,5 +34,14 @@ public class Schedule {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }

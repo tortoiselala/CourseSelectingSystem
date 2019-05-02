@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.SimpleFormatter;
 
-public class DateHelper {
+public class DateUtil {
     private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 

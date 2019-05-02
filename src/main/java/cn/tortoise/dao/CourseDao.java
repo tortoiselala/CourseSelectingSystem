@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 
-
 public interface CourseDao {
     //
     int addNewCourse(Course course);
@@ -21,17 +20,29 @@ public interface CourseDao {
 
     List<Course> getCourseList();
 
-    // get course list using limit and offset
-    List<Course> getCourseListUsingOffsetAndLimit(@Param("offset")int offset, @Param("limit")int limit);
-
     // get course num
     int getCourseNum();
 
-    //
-    List<SelectedCourseOverview> getSelectedCourseOverviewById(@Param("id")String id);
+    // get course list using limit and offset
+    List<Course> getCourseListUsingOffsetAndLimit(@Param("offset") int offset, @Param("limit") int limit);
 
     //
-    List<SelectedCourseOverview> getSelectedCourseOverviewByIdUsingOffsetAndLimit(@Param("id")String id, @Param("offset")int offset, @Param("limit")int limit);
+    List<SelectedCourseOverview> getSelectedCourseOverviewById(@Param("id") String id);
+
+    //
+    List<SelectedCourseOverview> getSelectedCourseOverviewByIdUsingOffsetAndLimit(@Param("id") String id, @Param("offset") int offset, @Param("limit") int limit);
 
     int decreaseCourse(long courseId);
+
+    // select course
+    int selectCourse(@Param("studentId") String studentId, @Param("courseId") long courseId);
+
+    // get selected course by id
+    List<SelectedCourse> getSelectedCourseByStudentId(String id);
+
+    // get selected course by id using offset and limit
+    List<SelectedCourse> getSelectedCourseByStudentIdUsingOffsetAndLimit(
+            @Param("id") String id,
+            @Param("offset") int offset,
+            @Param("limit") int limit);
 }

@@ -72,6 +72,22 @@
         update ignore course set current_number = current_number + 1 where id = #{id}
     </update>
 
+    <insert id="selectCourse">
+        insert ignore into selected_course (student_id, course_id)
+        values (#{studentId}, #{courseId})
+    </insert>
 
+    <select id="getSelectedCourseByStudentId" resultType="cn.tortoise.entity.SelectedCourse">
+        select student_id, course_id, score
+        from selected_course
+        where student_id = #{id}
+    </select>
 
+    <select id="getSelectedCourseByStudentIdUsingOffsetAndLimit" resultType="cn.tortoise.entity.SelectedCourse">
+        select student_id, course_id, score
+        from selected_course
+        where student_id = #{id}
+        limit #{offset}, #{limit}
+
+    </select>
 </mapper>

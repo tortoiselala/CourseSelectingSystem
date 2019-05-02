@@ -18,9 +18,4 @@
         from student
         where id=#{id}
     </select>
-
-    <insert id="selectCourse">
-        insert ignore into selected_course (student_id, course_id)
-        values (#{studentId}, #{courseId})
-    </insert>
 </mapper>

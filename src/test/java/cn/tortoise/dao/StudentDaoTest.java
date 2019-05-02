@@ -35,10 +35,5 @@ public class StudentDaoTest {
         System.out.println(studentDao.getStudentById(id));
     }
 
-    @Test
-    public void selectCourse() {
-        String studentId = "U201614515";
-        long courseId = 1001L;
-        System.out.println(studentDao.selectCourse(studentId, courseId));
-    }
+
 }

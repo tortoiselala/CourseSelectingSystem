@@ -32,7 +32,7 @@ public class TeacherDaoTest {
     }
 
     @Test
-    public void updateLoginDazte() {
+    public void updateLoginDate() {
         Assert.assertTrue(teacherDao.updateLoginDateById(id, new Date()) == 1);
     }
 }

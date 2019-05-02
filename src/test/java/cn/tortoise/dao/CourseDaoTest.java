@@ -2,7 +2,8 @@ package cn.tortoise.dao;
 
 import cn.tortoise.dto.SelectedCourseOverview;
 import cn.tortoise.entity.Course;
-import cn.tortoise.utils.DateHelper;
+import cn.tortoise.entity.SelectedCourse;
+import cn.tortoise.utils.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class CourseDaoTest {
         course.setCreditHours(24);
         course.setMaxNumber(100);
         course.setCurrentNumber(0);
-        course.setStartTime(DateHelper.parseDate("2017-01-01 11:11:11"));
-        course.setEndTime(DateHelper.parseDate("2019-01-01 11:11:11"));
+        course.setStartTime(DateUtil.parseDate("2017-01-01 11:11:11"));
+        course.setEndTime(DateUtil.parseDate("2019-01-01 11:11:11"));
         course.setDays(3);
         course.setWeeks(1025);
         course.setClassTime(6);
@@ -53,7 +54,7 @@ public class CourseDaoTest {
 
     @Test
     public void getCourseListUsingOffsetAndLimit() {
-        for (Course course : courseDao.getCourseListUsingOffsetAndLimit(3, 2)){
+        for (Course course : courseDao.getCourseListUsingOffsetAndLimit(3, 2)) {
             System.out.println(course);
         }
     }
@@ -65,22 +66,49 @@ public class CourseDaoTest {
 
     @Test
     public void getCourseList() {
-        for(Course course : courseDao.getCourseList()){
+        for (Course course : courseDao.getCourseList()) {
             System.out.println(course);
         }
     }
 
     @Test
     public void getSelectedCourseOverviewById() {
-        for(SelectedCourseOverview e : courseDao.getSelectedCourseOverviewById("U201614515")){
+        for (SelectedCourseOverview e : courseDao.getSelectedCourseOverviewById("U201614515")) {
             System.out.println(e);
         }
     }
 
     @Test
     public void getSelectedCourseOverviewByIdUsingOffsetAndLimit() {
-        for(SelectedCourseOverview e : courseDao.getSelectedCourseOverviewByIdUsingOffsetAndLimit("U201614515", 0, 100)){
+        for (SelectedCourseOverview e : courseDao.getSelectedCourseOverviewByIdUsingOffsetAndLimit("U201614515", 0, 100)) {
             System.out.println(e);
+        }
+    }
+
+    @Test
+    public void decreaseCourse() {
+        System.out.println("decrease 1005(120): " + courseDao.decreaseCourse(1005));
+        System.out.println("decrease 1007(1): " + courseDao.decreaseCourse(1007));
+    }
+
+    @Test
+    public void selectCourse() {
+        String studentId = "U201614515";
+        long courseId = 1001L;
+        System.out.println(courseDao.selectCourse(studentId, courseId));
+    }
+
+    @Test
+    public void getSelectedCourseByStudentId() {
+        for(SelectedCourse sc : courseDao.getSelectedCourseByStudentId("U000000001")){
+            System.out.println(sc);
+        }
+    }
+
+    @Test
+    public void getSelectedCourseByStudentIdUsingOffsetAndLimit() {
+        for(SelectedCourse sc : courseDao.getSelectedCourseByStudentIdUsingOffsetAndLimit("U000000001", 1, 2)){
+            System.out.println(sc);
         }
     }
 }

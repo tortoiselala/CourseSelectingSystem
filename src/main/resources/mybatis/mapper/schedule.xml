@@ -7,4 +7,17 @@
         select id, start_time, end_time from system_schedule
         where id = #{id}
     </select>
+
+    <insert id="insertSchedule" parameterType="cn.tortoise.entity.Schedule">
+        insert into system_schedule (start_time, end_time)
+        values(#{startTime}, #{endTime})
+    </insert>
+
+    <select id="getAllSchedule" resultType="cn.tortoise.entity.Schedule">
+        select id, start_time, end_time from system_schedule
+    </select>
+
+    <select id="getScheduleListUsingOffsetAndLimit" resultType="cn.tortoise.entity.Schedule">
+        select id, start_time, end_time from system_schedule limit #{offset}, #{limit}
+    </select>
 </mapper>

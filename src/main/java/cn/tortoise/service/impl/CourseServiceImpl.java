@@ -46,7 +46,7 @@ public class CourseServiceImpl implements CourseService {
         if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
             throw new ExecuteException("system is not open");
         }
-        int insertCount = studentDao.selectCourse(studentId, courseId);
+        int insertCount = courseDao.selectCourse(studentId, courseId);
         if(insertCount <= 0){
             throw new ExecuteException("user had selected this course");
         }
