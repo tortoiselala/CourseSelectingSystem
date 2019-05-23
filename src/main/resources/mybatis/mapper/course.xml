@@ -2,7 +2,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tortoise.dao.CourseDao">
-    <insert id="addNewCourse" parameterType="cn.tortoise.entity.Course">
+    <insert id="addNewCourse" parameterType="cn.tortoise.model.entity.Course">
         insert into course(
         name, teacher_id, credit_point, credit_hours,
         max_number, current_number, start_time, end_time,
@@ -17,18 +17,27 @@
 
     </insert>
 
-    <delete id="deleteCourseById" parameterType="long">
-        delete from course where id=#{id}
+    <delete id="deleteCourseById">
+        delete from course where id=#{courseId} and teacher_id = #{teacherId} and current_number = 0
+    </delete>
+    <delete id="deleteSelectedCourseByStudentIdAndCourseId">
+        delete from selected_course where student_id = #{studentId} and course_id = #{courseId}
     </delete>
 
-    <select id="getCourseById" parameterType="long" resultType="cn.tortoise.entity.Course">
+    <select id="getCourseById" parameterType="long" resultType="cn.tortoise.model.entity.Course">
         select id, name, teacher_id, credit_point,
                 credit_hours, max_number, current_number,
                 start_time, end_time, days, weeks, class_time,
                 allow_grade, detail from course where id=#{id};
     </select>
 
-    <select id="getCourseList" resultType="cn.tortoise.entity.Course">
+    <select id="getSelectedCourse" resultType="cn.tortoise.model.entity.SelectedCourse">
+        select student_id, course_id, score
+        from selected_course
+        where student_id = #{studentId} and course_id = #{courseId}
+    </select>
+
+    <select id="getCourseList" resultType="cn.tortoise.model.entity.Course">
         select id, name, teacher_id, credit_point,
                 credit_hours, max_number, current_number,
                 start_time, end_time, days, weeks, class_time,
@@ -36,7 +45,7 @@
         from course
     </select>
 
-    <select id="getCourseListUsingOffsetAndLimit" resultType="cn.tortoise.entity.Course">
+    <select id="getCourseListUsingOffsetAndLimit" resultType="cn.tortoise.model.entity.Course">
         select id, name, teacher_id, credit_point,
                 credit_hours, max_number, current_number,
                 start_time, end_time, days, weeks, class_time,
@@ -49,26 +58,22 @@
         select count(id) from course
     </select>
 
-    <select id="getSelectedCourseOverviewById" resultType="cn.tortoise.dto.SelectedCourseOverview">
-        select selected_course.course_id as course_id,
-                course.name as course_name,
-                selected_course.score as score
-        from selected_course, course
-        where selected_course.student_id = #{id}
-            and selected_course.course_id = course.id
-    </select>
 
-    <select id="getSelectedCourseOverviewByIdUsingOffsetAndLimit" resultType="cn.tortoise.dto.SelectedCourseOverview">
-      select selected_course.course_id as course_id,
-                course.name as course_name,
-                selected_course.score as score
-        from selected_course, course
-        where selected_course.student_id = #{id}
-            and selected_course.course_id = course.id
+    <select id="getSelectedCourseOverviewByStudentIdUsingOffsetAndLimit" resultType="cn.tortoise.model.dto.SelectedCourseOverview">
+        select s.course_id course_id, c.name courseName,s.score course_score, t.name teacher_name,
+               c.credit_point credit_point, c.credit_hours credit_hours,
+               c.max_number max_number, c.start_time start_time,
+               c.end_time end_time, c.days days, c.weeks weeks,
+               c.class_time class_time, c.detail detail
+        from selected_course s
+                 left join course c on s.course_id = c.id
+                 left join teacher t on c.teacher_id = t.id
+        where s.student_id = #{studentId}
+
         limit #{offset}, #{limit}
     </select>
 
-    <update id="decreaseCourse">
+    <update id="increaseCourse">
         update ignore course set current_number = current_number + 1 where id = #{id}
     </update>
 
@@ -77,17 +82,45 @@
         values (#{studentId}, #{courseId})
     </insert>
 
-    <select id="getSelectedCourseByStudentId" resultType="cn.tortoise.entity.SelectedCourse">
-        select student_id, course_id, score
-        from selected_course
-        where student_id = #{id}
+
+    <select id="getPublishedCourseListByTeacherIdUsingOffsetAndLimit" resultType="cn.tortoise.model.dto.TeacherCourseOverview">
+        select id, name, credit_point,
+               credit_hours, max_number, current_number,
+               start_time, end_time, days, weeks, class_time,
+               allow_grade, detail
+        from course
+        where teacher_id = #{id}
+        limit #{offset}, #{limit}
     </select>
 
-    <select id="getSelectedCourseByStudentIdUsingOffsetAndLimit" resultType="cn.tortoise.entity.SelectedCourse">
-        select student_id, course_id, score
-        from selected_course
-        where student_id = #{id}
-        limit #{offset}, #{limit}
+    <select id="getStudentListWhoChosenTargetCourse" resultType="cn.tortoise.model.entity.StudentScore">
+        select s.id id, s.sex sex, s.name name, s.grade grade, s.major_id, s.school_id, c.score score
+        from student s, selected_course c
+        where c.course_id = #{id} and s.id = c.student_id
 
+    </select>
+
+    <select id="getPublishedCourseCountById" resultType="int">
+        select count(id) from course where teacher_id=#{id}
+    </select>
+
+    <update id="updateScoreByStudentIdAndCourseId">
+        update selected_course set score = #{score}
+        where student_id = #{studentId} and course_id = #{courseId}
+    </update>
+    <update id="decreaseCourse">
+        update ignore course set current_number = current_number - 1 where id = #{id}
+    </update>
+
+    <select id="getPublishedCourseByCourseIdAndTeacherId" resultType="cn.tortoise.model.dto.TeacherCourseOverview">
+        select id, name, credit_point,
+               credit_hours, max_number, current_number,
+               start_time, end_time, days, weeks, class_time,
+               allow_grade, detail
+        from course
+        where id = #{courseId} and teacher_id = #{teacherId};
+    </select>
+    <select id="getSelectedCourseCountByStudentId" resultType="java.lang.Integer">
+        select count(course_id) from selected_course where student_id = #{studentId}
     </select>
 </mapper>

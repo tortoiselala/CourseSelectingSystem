@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程列表 | 选课系统</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/resources/js/common/paginator/jq-paginator.js"></script>
+    <script src="/resources/js/student/main.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/student/main.html">课程中心</a>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="nav navbar-nav">
+            <li>
+                <a class="nav-link" href="/student/userCenter.html"><span class="glyphicon glyphicon-user"></span>个人中心</a>
+            </li>
+            <li>
+                <a class="nav-link" href="/logout"><span class="glyphicon glyphicon-log-in"></span>注销</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <table class="table table-hover">
+                <caption>课程列表</caption>
+                <thead>
+                <tr>
+                    <th>课程</th>
+                    <th>学分</th>
+                    <th>学时</th>
+                    <th>人数</th>
+                    <th>开课时间</th>
+                    <th>结束时间</th>
+                    <th>星期</th>
+                    <th>周</th>
+                    <th>上课时间</th>
+                    <th>允许</th>
+                    <th>课程简介</th>
+                    <th>选择</th>
+                </tr>
+                </thead>
+                <tbody id="course_list">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-2"></div>
+
+        <ul class="pagination" id="pagination_container"></ul>
+    </div>
+</div>
+</body>
+</html>

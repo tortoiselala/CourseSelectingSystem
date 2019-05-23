@@ -1,20 +1,30 @@
 package cn.tortoise.dao;
 
-import cn.tortoise.entity.Course;
-import cn.tortoise.entity.Teacher;
+import cn.tortoise.model.entity.Teacher;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
-import java.util.List;
 
 public interface TeacherDao {
-    // password
+    /**
+     * 根据id获取密码
+     * @param id 教师Id
+     * @return 密码
+     */
     String getPasswordById(String id);
 
-    // name
+    /**
+     * 根据id获取教师名称
+     * @param id 教师id
+     * @return 名称
+     */
     String getNameById(String id);
 
-    // get
+    /**
+     * 获取教师信息
+     * @param id 教师id
+     * @return 教师信息
+     */
     Teacher getTeacherById(String id);
 
     // update login date

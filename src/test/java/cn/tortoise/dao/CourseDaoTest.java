@@ -1,8 +1,10 @@
 package cn.tortoise.dao;
 
-import cn.tortoise.dto.SelectedCourseOverview;
-import cn.tortoise.entity.Course;
-import cn.tortoise.entity.SelectedCourse;
+import cn.tortoise.model.dto.SelectedCourseOverview;
+import cn.tortoise.model.dto.TeacherCourseOverview;
+import cn.tortoise.model.entity.Course;
+import cn.tortoise.model.entity.SelectedCourse;
+import cn.tortoise.model.entity.StudentScore;
 import cn.tortoise.utils.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,15 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Date;
-
-import static org.junit.Assert.*;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
 public class CourseDaoTest {
 
     private final long id = 1000;
+    private final String teacherId = "M000000007";
+    private final String studentId = "U000000001";
+
 
     @Autowired
     CourseDao courseDao;
@@ -32,8 +35,8 @@ public class CourseDaoTest {
         course.setCreditHours(24);
         course.setMaxNumber(100);
         course.setCurrentNumber(0);
-        course.setStartTime(DateUtil.parseDate("2017-01-01 11:11:11"));
-        course.setEndTime(DateUtil.parseDate("2019-01-01 11:11:11"));
+        course.setStartTime(DateUtil.parseDatetime("2017-01-01 11:11:11"));
+        course.setEndTime(DateUtil.parseDatetime("2019-01-01 11:11:11"));
         course.setDays(3);
         course.setWeeks(1025);
         course.setClassTime(6);
@@ -44,7 +47,7 @@ public class CourseDaoTest {
 
     @Test
     public void deleteCourseById() {
-        System.out.println(courseDao.deleteCourseById(1001));
+        System.out.println(courseDao.deleteCourseById(teacherId, 76545));
     }
 
     @Test
@@ -71,24 +74,18 @@ public class CourseDaoTest {
         }
     }
 
-    @Test
-    public void getSelectedCourseOverviewById() {
-        for (SelectedCourseOverview e : courseDao.getSelectedCourseOverviewById("U201614515")) {
-            System.out.println(e);
-        }
-    }
 
     @Test
     public void getSelectedCourseOverviewByIdUsingOffsetAndLimit() {
-        for (SelectedCourseOverview e : courseDao.getSelectedCourseOverviewByIdUsingOffsetAndLimit("U201614515", 0, 100)) {
+        for (SelectedCourseOverview e : courseDao.getSelectedCourseOverviewByStudentIdUsingOffsetAndLimit("U201614515", 0, 100)) {
             System.out.println(e);
         }
     }
 
     @Test
     public void decreaseCourse() {
-        System.out.println("decrease 1005(120): " + courseDao.decreaseCourse(1005));
-        System.out.println("decrease 1007(1): " + courseDao.decreaseCourse(1007));
+        System.out.println("decrease 1005(120): " + courseDao.increaseCourse(1005));
+        System.out.println("decrease 1007(1): " + courseDao.increaseCourse(1007));
     }
 
     @Test
@@ -99,16 +96,48 @@ public class CourseDaoTest {
     }
 
     @Test
-    public void getSelectedCourseByStudentId() {
-        for(SelectedCourse sc : courseDao.getSelectedCourseByStudentId("U000000001")){
+    public void getPublishedCourseListByTeacherIdUsingOffsetAndLimit() {
+        List<TeacherCourseOverview> list = courseDao.getPublishedCourseListByTeacherIdUsingOffsetAndLimit("M000000001", 100, 20);
+        System.out.println(list.size());
+        for(TeacherCourseOverview ov : list){
+            System.out.println(ov);
+        }
+    }
+
+    @Test
+    public void getStudentListWhoChosenTargetCourse() {
+        List<StudentScore> list = courseDao.getStudentListWhoChosenTargetCourse(1005);
+        for(StudentScore sc : list){
             System.out.println(sc);
         }
     }
 
     @Test
-    public void getSelectedCourseByStudentIdUsingOffsetAndLimit() {
-        for(SelectedCourse sc : courseDao.getSelectedCourseByStudentIdUsingOffsetAndLimit("U000000001", 1, 2)){
-            System.out.println(sc);
+    public void updateScoreByStudentIdAndCourseId() {
+        int result = courseDao.updateScoreByStudentIdAndCourseId(studentId, id, 50);
+        System.out.println("result = " + result);
+    }
+
+    @Test
+    public void getSelectedCourse() {
+        SelectedCourse sc = courseDao.getSelectedCourse(studentId, 200);
+        System.out.println(sc);
+    }
+
+    @Test
+    public void getPublishedCourseCountById() {
+        System.out.println("count = " + courseDao.getPublishedCourseCountById(teacherId));
+    }
+
+    @Test
+    public void getPublishedCourseByCourseIdAndTeacherId() {
+        System.out.println(courseDao.getPublishedCourseByCourseIdAndTeacherId(1000, "M000000001"));
+    }
+
+    @Test
+    public void getSelectedCourseOverviewByStudentIdUsingOffsetAndLimit() {
+        for(SelectedCourseOverview s : courseDao.getSelectedCourseOverviewByStudentIdUsingOffsetAndLimit("U000000001", 0, 20)){
+            System.out.println(s);
         }
     }
 }

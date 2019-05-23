@@ -1,6 +1,5 @@
 package cn.tortoise.dao;
 
-import cn.tortoise.entity.SelectedCourse;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

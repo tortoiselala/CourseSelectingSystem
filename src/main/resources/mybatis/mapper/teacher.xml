@@ -11,7 +11,7 @@
         select name from teacher where id=#{id}
     </select>
 
-    <select id="getTeacherById" resultType="cn.tortoise.entity.Teacher">
+    <select id="getTeacherById" resultType="cn.tortoise.model.entity.Teacher">
         select id, sex, name, school_id, password, login_date from teacher
         where id = #{id}
     </select>

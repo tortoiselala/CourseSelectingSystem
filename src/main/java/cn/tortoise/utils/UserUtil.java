@@ -1,16 +1,15 @@
 package cn.tortoise.utils;
 
-import cn.tortoise.entity.User;
-import cn.tortoise.exceptions.IllegalArgumentCheckedException;
+import cn.tortoise.model.entity.User;
 
 public class UserUtil {
-    public static void userParmCheck(User user) throws IllegalArgumentCheckedException {
+    public static void userParmCheck(User user) {
         if(user  == null
                 || user.getUsername() == null
                 || user.getPassword() == null
                 || user.getUsername().length() == 0
                 || user.getPassword().length() == 0){
-            throw new IllegalArgumentCheckedException(user.toString());
+            throw new IllegalArgumentException(user.toString());
         }
     }
 }

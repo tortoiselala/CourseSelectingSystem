@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/resources/js/common/paginator/jq-paginator.js"></script>
+    <script src="/resources/js/teacher/main.js"></script>
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/teacher/main.html">课程中心</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/teacher/addNewCourse.html"><span class="glyphicon glyphicon-user"></span>增加新课程</a></li>
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span>注销</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span2"></div>
+        <div class="span8">
+            <table class="table table-hover">
+                <caption>您发布的课程</caption>
+                <thead>
+                <tr>
+                    <th>课程</th>
+                    <th>学分</th>
+                    <th>学时</th>
+                    <th>人数</th>
+                    <th>开课时间</th>
+                    <th>结束时间</th>
+                    <th>星期</th>
+                    <th>周</th>
+                    <th>上课时间</th>
+                    <th>允许</th>
+                    <th>课程简介</th>
+                    <th>详情</th>
+                    <th>删除</th>
+                </tr>
+                </thead>
+                <tbody class="table table-hover" id="course_list">
+
+                </tbody>
+            </table>
+            <div class="span2"></div>
+            <ul class="pagination" id="pagination_container"></ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

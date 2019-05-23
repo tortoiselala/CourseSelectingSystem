@@ -1,7 +1,6 @@
 package cn.tortoise.utils;
 
-import cn.tortoise.entity.Course;
-import cn.tortoise.entity.Student;
+import cn.tortoise.model.entity.Course;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,7 +8,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.util.zip.CheckedOutputStream;
 
 public class CourseAutoGenerator {
     public static final String[] TEACHER_LIST = {
@@ -46,8 +44,8 @@ public class CourseAutoGenerator {
         course.setCreditHours(CREDIT_HOURS[Math.abs(rand.nextInt()) % CREDIT_HOURS.length]);
         course.setMaxNumber(Math.abs(rand.nextInt()) % 200);
         course.setCurrentNumber(0);
-        course.setStartTime(DateUtil.parseDate("2018-0-01 01:01:01"));
-        course.setEndTime(DateUtil.parseDate("2020-01-01 01:01:01"));
+        course.setStartTime(DateUtil.parseDatetime("2018-0-01 01:01:01"));
+        course.setEndTime(DateUtil.parseDatetime("2020-01-01 01:01:01"));
         course.setDays(3);
         course.setWeeks(3);
         course.setAllowGrade(3);

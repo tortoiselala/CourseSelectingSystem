@@ -1,7 +1,7 @@
 package cn.tortoise.utils;
 
-import cn.tortoise.entity.Student;
-import cn.tortoise.entity.Teacher;
+import cn.tortoise.model.entity.Student;
+import cn.tortoise.enums.Sex;
 
 import java.io.*;
 import java.util.Date;
@@ -36,7 +36,7 @@ public class UserAutoGenerator {
         Student stu = new Student();
         stu.setId(stringAutoGenerator());
         stu.setName(stu.getId());
-        stu.setSex(booleanAutoGenerator());
+        stu.setSex(Sex.getSex(booleanAutoGenerator() ? 1 : 0));
         stu.setGrade(gradeAutoGenerator());
         stu.setPassword(stu.getId());
         stu.setMajorId(majorIdAutoGenerator());
@@ -115,7 +115,7 @@ public class UserAutoGenerator {
                         + "," + stu.getMajorId()
                         + "," + stu.getSchoolId()
                         + "," + stu.getSchoolId()
-                        + "," + (stu.isSex() ? 1 : 0)
+                        + "," + stu.getSex()
                         + "," + DateUtil.toString(stu.getLoginDate())
                         + "\n"
         );

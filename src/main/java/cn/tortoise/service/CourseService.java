@@ -1,16 +1,14 @@
 package cn.tortoise.service;
 
-import cn.tortoise.dto.CourseDetail;
-import cn.tortoise.dto.CourseOverview;
-import cn.tortoise.dto.ExecuteResult;
-import cn.tortoise.dto.SelectedCourseOverview;
-import cn.tortoise.entity.Course;
-import cn.tortoise.entity.SelectedCourse;
+import cn.tortoise.model.dto.CourseDetail;
+import cn.tortoise.model.dto.CourseOverview;
+import cn.tortoise.model.dto.ExecuteResult;
+import cn.tortoise.model.dto.SelectedCourseOverview;
+import cn.tortoise.model.entity.Course;
 import cn.tortoise.exceptions.ExecuteException;
 import cn.tortoise.exceptions.IllegalArgumentCheckedException;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 
 public interface CourseService {
 
@@ -20,7 +18,7 @@ public interface CourseService {
 
     Course getCourseById(long id);
 
-    List<SelectedCourseOverview> getSelectedCourseByStudentId(String id) throws IllegalArgumentCheckedException;
+    ExecuteResult decreaseSelectedCourse(String studentId, long courseId);
 
     List<SelectedCourseOverview> getSelectedCourseByStudentId(String id, int offset, int limit) throws IllegalArgumentCheckedException;
 

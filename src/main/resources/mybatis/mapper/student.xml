@@ -13,7 +13,7 @@
         where id = #{id}
     </update>
 
-    <select id="getStudentById" resultType="cn.tortoise.entity.Student">
+    <select id="getStudentById" resultType="cn.tortoise.model.entity.Student">
         select id, sex, name, grade, password, major_id, school_id, login_date
         from student
         where id=#{id}

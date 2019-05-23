@@ -3,21 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tortoise.dao.ScheduleDao">
-    <select id="getScheduleById" resultType="cn.tortoise.entity.Schedule">
+    <select id="getScheduleById" resultType="cn.tortoise.model.entity.Schedule">
         select id, start_time, end_time from system_schedule
         where id = #{id}
     </select>
 
-    <insert id="insertSchedule" parameterType="cn.tortoise.entity.Schedule">
+    <insert id="insertSchedule" parameterType="cn.tortoise.model.entity.Schedule">
         insert into system_schedule (start_time, end_time)
         values(#{startTime}, #{endTime})
     </insert>
 
-    <select id="getAllSchedule" resultType="cn.tortoise.entity.Schedule">
+    <select id="getAllSchedule" resultType="cn.tortoise.model.entity.Schedule">
         select id, start_time, end_time from system_schedule
     </select>
 
-    <select id="getScheduleListUsingOffsetAndLimit" resultType="cn.tortoise.entity.Schedule">
+    <select id="getScheduleListUsingOffsetAndLimit" resultType="cn.tortoise.model.entity.Schedule">
         select id, start_time, end_time from system_schedule limit #{offset}, #{limit}
     </select>
 </mapper>

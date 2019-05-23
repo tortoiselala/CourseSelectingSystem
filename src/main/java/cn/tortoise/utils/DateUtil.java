@@ -7,31 +7,30 @@ import java.util.Date;
 import java.util.logging.SimpleFormatter;
 
 public class DateUtil {
-    private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
 
-
-    public static Date parseDate(String dateStr){
-        try {
-            return new SimpleDateFormat(FORMAT).parse(dateStr);
-        } catch (ParseException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return Calendar.getInstance().getTime();
+    public static Date parseDate(String str) throws ParseException {
+        return parseDate(DATE_FORMAT, str);
     }
 
-    public static Date parseDate(String format, String dateStr){
+    public static Date parseDatetime(String dateStr){
         try {
-            return new SimpleDateFormat(format).parse(dateStr);
+            return parseDate(DATETIME_FORMAT, dateStr);
         } catch (ParseException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return new Date();
     }
 
+    public static Date parseDate(String format, String dateStr) throws ParseException {
+
+        return new SimpleDateFormat(format).parse(dateStr);
+
+    }
+
 
     public static String toString(Date date){
-        return new SimpleDateFormat(FORMAT).format(date);
+        return new SimpleDateFormat(DATETIME_FORMAT).format(date);
     }
 }

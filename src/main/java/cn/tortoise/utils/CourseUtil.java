@@ -50,4 +50,15 @@ public class CourseUtil {
     public static boolean md5Check(long courseId, String expected){
        return expected != null && getMd5(courseId).equals(expected);
     }
+
+    public static boolean scoreCheck(int score){
+        return scoreCheck(score, 0, 100);
+    }
+
+    public static boolean scoreCheck(int score, int min, int max){
+        if(score < min || score > max){
+            return false;
+        }
+        return true;
+    }
 }

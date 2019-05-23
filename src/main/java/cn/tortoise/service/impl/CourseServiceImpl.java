@@ -5,9 +5,12 @@ import cn.tortoise.dao.CourseDao;
 import cn.tortoise.dao.ScheduleDao;
 import cn.tortoise.dao.StudentDao;
 import cn.tortoise.dao.TeacherDao;
-import cn.tortoise.dto.*;
-import cn.tortoise.entity.Course;
-import cn.tortoise.entity.Schedule;
+import cn.tortoise.model.dto.CourseDetail;
+import cn.tortoise.model.dto.CourseOverview;
+import cn.tortoise.model.dto.ExecuteResult;
+import cn.tortoise.model.dto.SelectedCourseOverview;
+import cn.tortoise.model.entity.Course;
+import cn.tortoise.model.entity.Schedule;
 import cn.tortoise.exceptions.ExecuteException;
 import cn.tortoise.exceptions.IllegalArgumentCheckedException;
 import cn.tortoise.service.CourseService;
@@ -37,32 +40,59 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public ExecuteResult executeSelection(String studentId, long courseId, String md5) throws ExecuteException {
-        if(!CourseUtil.md5Check(courseId, md5)){
-            throw new ExecuteException("request link had been rewrote");
+    public ExecuteResult executeSelection(String studentId, long courseId, String md5) {
+
+        try {
+            if(!CourseUtil.md5Check(courseId, md5)){
+                throw new ExecuteException("request link had been rewrote");
+            }
+            Date now = new Date();
+            Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
+            if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
+                throw new ExecuteException("system is not open");
+            }
+            int insertCount = courseDao.selectCourse(studentId, courseId);
+            if(insertCount <= 0){
+                throw new ExecuteException("user had selected this course");
+            }
+            int updateCount = courseDao.increaseCourse(courseId);
+            if(updateCount <= 0){
+                throw new ExecuteException("The number of students is full");
+            }
+        } catch (ExecuteException e) {
+            e.printStackTrace();
         }
+
+
+        return new ExecuteResult(true, "");
+    }
+
+    @Override
+    @Transactional
+    public ExecuteResult decreaseSelectedCourse(String studentId, long courseId) {
         Date now = new Date();
         Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
         if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
-            throw new ExecuteException("system is not open");
+            return new ExecuteResult(false, "system is not open");
         }
-        int insertCount = courseDao.selectCourse(studentId, courseId);
-        if(insertCount <= 0){
-            throw new ExecuteException("user had selected this course");
-        }
-        int updateCount = courseDao.decreaseCourse(courseId);
+        int updateCount = courseDao.deleteSelectedCourseByStudentIdAndCourseId(studentId, courseId);
         if(updateCount <= 0){
-            throw new ExecuteException("The number of students is full");
+            return new ExecuteResult(false, "you should select it first");
+        }
+        int decreaseCount = courseDao.decreaseCourse(courseId);
+        if(decreaseCount <= 0){
+            return new ExecuteResult(false, "inner error");
         }
         return new ExecuteResult(true, "");
     }
+
 
     @Override
     public ExecuteResult exportExecuteUrl(long courseId){
         Date now = new Date();
         Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
         if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
-           return new ExecuteResult(false, "");
+            return new ExecuteResult(false, "");
         }
         return new ExecuteResult(true, CourseUtil.getMd5(courseId));
     }
@@ -72,20 +102,17 @@ public class CourseServiceImpl implements CourseService {
         return this.courseDao.getCourseById(id);
     }
 
-    @Override
-    public List<SelectedCourseOverview> getSelectedCourseByStudentId(String id) throws IllegalArgumentCheckedException {
-        if(id == null || id.length() == 0){
-            throw new IllegalArgumentCheckedException("Illegal argument : " + id);
-        }
-        return courseDao.getSelectedCourseOverviewById(id);
-    }
+
 
     @Override
-    public List<SelectedCourseOverview> getSelectedCourseByStudentId(String id, int offset, int limit) throws IllegalArgumentCheckedException {
+    public List<SelectedCourseOverview> getSelectedCourseByStudentId(String id, int offset, int limit) {
         if(id == null || id.length() == 0){
-            throw new IllegalArgumentCheckedException("Illegal argument : " + id);
+            throw new IllegalArgumentException("Illegal argument : " + id);
         }
-        return courseDao.getSelectedCourseOverviewByIdUsingOffsetAndLimit(id, offset, limit);
+        if(offset < 0 || limit - offset > CommonConstant.MAX_QUERY_NUM){
+            throw new IllegalArgumentException("offset : " + offset + " limit : " + limit);
+        }
+        return courseDao.getSelectedCourseOverviewByStudentIdUsingOffsetAndLimit(id, offset, limit);
     }
 
     @Override
