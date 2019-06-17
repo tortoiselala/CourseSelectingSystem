@@ -9,6 +9,7 @@ import cn.tortoise.model.entity.StudentScore;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public interface CourseDao {
@@ -103,7 +104,7 @@ public interface CourseDao {
 
     /**
      * 获取某个教师发布的部分课程列表
-     * @param id 教师id
+     * @param id 教师id60
      * @param offset 课程列表偏移量
      * @param limit 课程列表长度
      * @return 课程列表
@@ -147,4 +148,45 @@ public interface CourseDao {
      * @return 操作结果
      */
     int deleteSelectedCourseByStudentIdAndCourseId(@Param("studentId")String studentId, @Param("courseId") long courseId);
+
+    // 满足课程设计要求，增加新的sql语句，仅仅实现接口，不添加到业务逻辑中
+    // 1.学生相关
+    //  - 统计自己选课数目
+    //  - 统计自己选课学分数目
+    //  - 成绩排名
+    //  - 查找学分排名中指定范围
+    //  - 查找学分大于指定值且选课人数比例小于指定值的课程
+    //  -
+    // 2.教师相关
+    //  - 统计平均成绩
+    /**
+     * 获取某学生选课数目
+     * @param studentId 学生id
+     * @return 学生选课数目
+     */
+    int getSelectedCourseNum(String studentId);
+
+    /**
+     * 统计学生已选课学分总数
+     * @param studentId 学生id
+     * @return 已选课学分总数
+     */
+    double getSelectedCourseCreditPointsCount(String studentId);
+
+    /**
+     * 根据成绩将课程排序
+     * @param studentId 学生id
+     * @param limit limit
+     * @param offset offset
+     * @return 排序结果
+     */
+    List<SelectedCourseOverview> getSelectedCourseOverviewOrderByScoreUsingLimit(@Param("studentId")String studentId, @Param("limit") int limit, @Param("offset") int offset);
+
+    /**
+     * 将课程信息按照学分排序，选择指定范围
+     * @param offset offset
+     * @param limit limit
+     * @return 查找结果
+     */
+    List<Course> getCourseListOrderByCreditPointUsingOffsetAndLimit(@Param("offset") int offset, @Param("limit") int limit);
 }

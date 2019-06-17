@@ -31,4 +31,4 @@ target/
 
 
 # database config file 
-**/mysql.properties
+# **/mysql.properties

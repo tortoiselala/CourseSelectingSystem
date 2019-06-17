@@ -46,11 +46,11 @@ public class CourseServiceImpl implements CourseService {
             if(!CourseUtil.md5Check(courseId, md5)){
                 throw new ExecuteException("request link had been rewrote");
             }
-            Date now = new Date();
-            Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
-            if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
-                throw new ExecuteException("system is not open");
-            }
+//            Date now = new Date();
+//            Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
+//            if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
+//                throw new ExecuteException("system is not open");
+//            }
             int insertCount = courseDao.selectCourse(studentId, courseId);
             if(insertCount <= 0){
                 throw new ExecuteException("user had selected this course");
@@ -60,7 +60,8 @@ public class CourseServiceImpl implements CourseService {
                 throw new ExecuteException("The number of students is full");
             }
         } catch (ExecuteException e) {
-            e.printStackTrace();
+
+            return new ExecuteResult(false, e.getMessage());
         }
 
 
@@ -70,11 +71,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public ExecuteResult decreaseSelectedCourse(String studentId, long courseId) {
-        Date now = new Date();
-        Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
-        if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
-            return new ExecuteResult(false, "system is not open");
-        }
+//        Date now = new Date();
+//        Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
+//        if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
+//            return new ExecuteResult(false, "system is not open");
+//        }
         int updateCount = courseDao.deleteSelectedCourseByStudentIdAndCourseId(studentId, courseId);
         if(updateCount <= 0){
             return new ExecuteResult(false, "you should select it first");
@@ -89,11 +90,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public ExecuteResult exportExecuteUrl(long courseId){
-        Date now = new Date();
-        Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
-        if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
-            return new ExecuteResult(false, "");
-        }
+
+//        Date now = new Date();
+//        Schedule schedule = scheduleDao.getScheduleById(CommonConstant.SYSTEM_SCHEDULE_ID);
+//        if(now.getTime() < schedule.getStartTime().getTime() || now.getTime() > schedule.getEndTime().getTime()){
+//            return new ExecuteResult(false, "");
+//        }
         return new ExecuteResult(true, CourseUtil.getMd5(courseId));
     }
 
